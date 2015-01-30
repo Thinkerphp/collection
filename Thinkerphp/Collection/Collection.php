@@ -41,7 +41,15 @@ class Collection{
     }
 
     public function pop(){
-        return array_pop($this->items);
+        return new static(array_pop($this->items));
+    }
+
+    public function toArray(){
+        return $this->items;
+    }
+
+    public function toJson(){
+        return json_encode($this->items);
     }
 
 }
