@@ -1,7 +1,6 @@
 <?php
 
-namespace Thinkerphp\Collection;
-
+namespace Thinkerphp;
 
 class Collection{
 
@@ -18,21 +17,21 @@ class Collection{
         return new static(is_array($items) ? $items : array($items));
     }
 
-    public function each(Closure $callback){
+    public function each(\Closure $callback){
         array_map($callback, $this->items);
         return $this;
     }
 
-    public function map(Closure $callback){
-        return new static(array_map($callback, $this->items));
+    public function map(\Closure $callback){
+        return new static(array_map($callback, $this->items, array_keys($this->items)));
     }
 
-    public function filter(Closure $callback){
+    public function filter(\Closure $callback){
         return new static(array_filter($this->items, $callback));
     }
 
-    public function sort(Closure $callback){
-        uasort($this->items, $callback);
+    public function sort(\Closure $callback){
+        usort($this->items, $callback);
         return $this;
     }
 
@@ -41,7 +40,7 @@ class Collection{
     }
 
     public function pop(){
-        return new static(array_pop($this->items));
+        return array_pop($this->items);
     }
 
     public function toArray(){
