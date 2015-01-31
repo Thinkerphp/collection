@@ -43,6 +43,30 @@ class Collection{
         return array_pop($this->items);
     }
 
+    public function sum($callback = null){
+
+        if (is_null($callback))
+        {
+            return array_sum($this->items);
+        }
+
+        if(is_callable($callback)){
+            $sum = 0;
+
+            $this->each(function($value) use ($callback, &$sum){
+                $sum += $callback($value);
+            });
+
+            return $sum;
+        }
+
+        return null;      
+    }
+
+    public function count(){
+        return count($this->items);
+    }
+
     public function toArray(){
         return $this->items;
     }
