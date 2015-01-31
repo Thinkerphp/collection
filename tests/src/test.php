@@ -51,6 +51,33 @@ class CollectionTest extends \PHPUnit_Framework_Testcase{
 		$this->assertEquals(6, $pop);
 	}
 
-	
+	public function testSum(){
+		$this->assertEquals(20, $this->collection->sum());
+	}
+
+	public function testSumCollectionOfArrays(){
+		$collection = new Collection(array(
+			array(
+				'product' => 'Shoes',
+				'total' => 12
+			),
+			array(
+				'product' => 'Hat',
+				'total' => 10
+			),
+			array(
+				'product' => 'Shirt',
+				'total' => 3
+			)
+		));
+
+		$this->assertEquals(25, $collection->sum(function($value){
+			return $value['total'];
+		}));
+	}
+
+	public function testCount(){
+		$this->assertEquals(4, $this->collection->count());
+	}
 
 }
