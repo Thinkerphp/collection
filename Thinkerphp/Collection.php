@@ -4,8 +4,10 @@ namespace Thinkerphp;
 
 use \Closure;
 use \Countable;
+use \ArrayAccess;
+use \JsonSerializable;
 
-class Collection implements Countable{
+class Collection implements Countable, ArrayAccess, JsonSerializable{
 
     protected $items = array();
 
@@ -103,7 +105,19 @@ class Collection implements Countable{
 
     public function offsetGet($key){
         return $this->items[$key];
+    }   
+
+    public function offsetSet($key, $value){
+        if (is_null($key)){
+            $this->items[] = $value;
+        }else{
+            $this->items[$key] = $value;
+        }
     }    
+
+    public function offsetUnset($key){
+        unset($this->items[$key]);
+    }     
 
     public function toArray(){
         return $this->items;
@@ -111,6 +125,14 @@ class Collection implements Countable{
 
     public function toJson(){
         return json_encode($this->items);
+    }
+
+    public function jsonSerialize(){
+        return $this->toArray();
+    }    
+
+    public function __toString(){
+        return $this->toJson();
     }
 
 }
