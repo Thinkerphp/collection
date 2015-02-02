@@ -3,8 +3,9 @@
 namespace Thinkerphp;
 
 use \Closure;
+use \Countable;
 
-class Collection{
+class Collection implements Countable{
 
     protected $items = array();
 
@@ -64,9 +65,45 @@ class Collection{
         return null;      
     }
 
+    public function reverse(){
+        return new static(array_reverse($this->items));
+    }   
+
+    public function shuffle(){
+        shuffle($this->items);
+        return $this;
+    } 
+
+    public function paginate($page, $perPage){
+        return new static(array_slice($this->items, ($page - 1) * $perPage, $perPage));
+    }
+
     public function count(){
         return count($this->items);
     }
+
+    public function isEmpty(){
+        return count($this->items) === 0;
+    }   
+
+    public function all(){
+        return $this->items;
+    } 
+
+    public function get($key, $default = null){
+        if($this->offsetExists($key)){
+            return $this->offsetGet($key);
+        }
+        return $default;
+    }
+
+    public function offsetExists($key){
+        return array_key_exists($key, $this->items);
+    }    
+
+    public function offsetGet($key){
+        return $this->items[$key];
+    }    
 
     public function toArray(){
         return $this->items;
