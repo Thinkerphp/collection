@@ -5,9 +5,8 @@ namespace Thinkerphp;
 use \Closure;
 use \Countable;
 use \ArrayAccess;
-use \JsonSerializable;
 
-class Collection implements Countable, ArrayAccess, JsonSerializable{
+class Collection implements Countable, ArrayAccess{
 
     protected $items = array();
 
