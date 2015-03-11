@@ -145,5 +145,9 @@ class CollectionTest extends \PHPUnit_Framework_Testcase{
 		$this->assertEquals(4, count($this->collection->all()));
 		$this->assertEquals(20, array_sum($this->collection->all()));
 	}
+
+	public function testFirst(){
+		$this->assertEquals(4, $this->collection->first());
+	}
 	
 }

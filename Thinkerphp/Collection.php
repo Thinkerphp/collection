@@ -10,7 +10,6 @@ class Collection implements Countable, ArrayAccess{
 
     protected $items = array();
 
-
     public function __construct(Array $items = array()){
         $this->items = $items;
     }
@@ -28,6 +27,11 @@ class Collection implements Countable, ArrayAccess{
 
     public function map(Closure $callback){
         return new static(array_map($callback, $this->items, array_keys($this->items)));
+    }
+
+    public function first(){
+        reset($this->items);
+        return current($this->items);
     }
 
     public function filter(Closure $callback){
